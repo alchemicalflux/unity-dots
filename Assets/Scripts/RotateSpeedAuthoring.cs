@@ -1,12 +1,12 @@
 /*------------------------------------------------------------------------------
   File:           RotateSpeedAuthoring.cs 
   Project:        AlchemicalFlux Unity-Dots
-  Description:    Handles the attachment of the RotateSpeed component to the 
-                    parent GameObject.
+  Description:    Handles the creation and processing of the DOTS RotateSpeed
+                    component on entities.
   Copyright:      
 
   Last commit by: alchemicalflux 
-  Last commit at: 2024-02-25 00:01:04 
+  Last commit at: 2024-02-25 00:03:42 
 ------------------------------------------------------------------------------*/
 using Unity.Entities;
 using UnityEngine;
@@ -27,5 +27,10 @@ namespace AlchemicalFlux.DOTS
                 AddComponent(entity, new RotateSpeed { Value = authoring.Value });
             }
         }
+    }
+
+    public struct RotateSpeed : IComponentData
+    {
+        public float Value;
     }
 }
