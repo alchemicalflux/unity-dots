@@ -1,7 +1,7 @@
 /*------------------------------------------------------------------------------
-  File:           PlayerAuthoring.cs 
+  File:           RotatingCubeAuthoring.cs 
   Project:        AlchemicalFlux Unity-Dots
-  Description:    Handles the creation and processing of the DOTS Player
+  Description:    Handles the creation and processing of the DOTS RotatingCube
                     component on entities.
   Copyright:      
 
@@ -13,21 +13,20 @@ using UnityEngine;
 
 namespace AlchemicalFlux.DOTS
 {
-    public class PlayerAuthoring : MonoBehaviour
+    public class RotatingCubeAuthoring : MonoBehaviour
     {
-        private class Baker : Baker<PlayerAuthoring>
+        private class Baker : Baker<RotatingCubeAuthoring>
         {
-            public override void Bake(PlayerAuthoring authoring)
+            public override void Bake(RotatingCubeAuthoring authoring)
             {
                 // Set to dynamic due to changing rotation position.
                 var entity = GetEntity(TransformUsageFlags.None);
-                AddComponent(entity, new Player());
+                AddComponent(entity, new RotatingCube());
             }
         }
     }
 
-    public struct Player : IComponentData
+    public struct RotatingCube : IComponentData
     {
-        public float Value;
     }
 }
