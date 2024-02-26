@@ -6,7 +6,7 @@
   Copyright:      
 
   Last commit by: alchemicalflux 
-  Last commit at: 2024-02-25 22:44:53 
+  Last commit at: 2024-02-25 22:47:18 
 ------------------------------------------------------------------------------*/
 using Unity.Burst;
 using Unity.Entities;
@@ -29,7 +29,7 @@ namespace AlchemicalFlux.DOTS
 
             var spawnCubesConfig = SystemAPI.GetSingleton<SpawnCubesConfig>();
 
-            var commandBuffer = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
+            var commandBuffer = new EntityCommandBuffer(WorldUpdateAllocator);
             foreach(var player in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>())
             {
                 var entity = commandBuffer.Instantiate(spawnCubesConfig.CubePrefabEntity);
