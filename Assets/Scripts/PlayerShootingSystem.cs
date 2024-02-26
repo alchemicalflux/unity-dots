@@ -6,7 +6,7 @@
   Copyright:      
 
   Last commit by: alchemicalflux 
-  Last commit at: 2024-02-25 22:47:18 
+  Last commit at: 2024-02-25 23:04:40 
 ------------------------------------------------------------------------------*/
 using Unity.Burst;
 using Unity.Entities;
@@ -25,12 +25,24 @@ namespace AlchemicalFlux.DOTS
 
         protected override void OnUpdate()
         {
-            if(!Input.GetKeyDown(KeyCode.Space)) { return; }
+            if(Input.GetKeyDown(KeyCode.T))
+            {
+                var player = SystemAPI.GetSingletonEntity<Player>();
+                EntityManager.SetComponentEnabled<Stunned>(player, true);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                var player = SystemAPI.GetSingletonEntity<Player>();
+                EntityManager.SetComponentEnabled<Stunned>(player, false);
+            }
+
+            if (!Input.GetKeyDown(KeyCode.Space)) { return; }
 
             var spawnCubesConfig = SystemAPI.GetSingleton<SpawnCubesConfig>();
 
             var commandBuffer = new EntityCommandBuffer(WorldUpdateAllocator);
-            foreach(var player in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>())
+            foreach(var player in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>().WithDisabled<Stunned>())
             {
                 var entity = commandBuffer.Instantiate(spawnCubesConfig.CubePrefabEntity);
                 commandBuffer.SetComponent(entity, new LocalTransform
