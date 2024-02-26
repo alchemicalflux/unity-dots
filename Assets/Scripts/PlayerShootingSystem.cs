@@ -6,7 +6,7 @@
   Copyright:      
 
   Last commit by: alchemicalflux 
-  Last commit at: 2024-02-25 22:40:05 
+  Last commit at: 2024-02-25 22:44:53 
 ------------------------------------------------------------------------------*/
 using Unity.Burst;
 using Unity.Entities;
@@ -28,16 +28,19 @@ namespace AlchemicalFlux.DOTS
             if(!Input.GetKeyDown(KeyCode.Space)) { return; }
 
             var spawnCubesConfig = SystemAPI.GetSingleton<SpawnCubesConfig>();
+
+            var commandBuffer = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
             foreach(var player in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>())
             {
-                var entity = EntityManager.Instantiate(spawnCubesConfig.CubePrefabEntity);
-                EntityManager.SetComponentData(entity, new LocalTransform
+                var entity = commandBuffer.Instantiate(spawnCubesConfig.CubePrefabEntity);
+                commandBuffer.SetComponent(entity, new LocalTransform
                 {
                     Position = player.ValueRO.Position,
                     Scale = 1f,
                     Rotation = Unity.Mathematics.quaternion.identity
                 });
             }
+            commandBuffer.Playback(EntityManager);
         }
     }
 }
