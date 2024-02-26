@@ -6,7 +6,7 @@
   Copyright:      
 
   Last commit by: alchemicalflux 
-  Last commit at: 2024-02-25 21:29:54 
+  Last commit at: 2024-02-25 22:05:56 
 ------------------------------------------------------------------------------*/
 using Unity.Entities;
 using Unity.Mathematics;
@@ -23,7 +23,7 @@ namespace AlchemicalFlux.DOTS
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 AddComponent(entity, new Movement()
                 {
-                    Vector = new(UnityEngine.Random.Range(-1f, 1f), 0, 0)
+                    Vector = new(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f))
                 });
             }
         }
