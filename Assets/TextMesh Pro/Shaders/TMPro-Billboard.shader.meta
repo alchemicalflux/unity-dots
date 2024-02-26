@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f48427ed237371a4c94c17d060c1d42d
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _FaceTex: {instanceID: 0}
+  - _OutlineTex: {instanceID: 0}
+  - _BumpMap: {instanceID: 0}
+  - _Cube: {instanceID: 0}
+  - _MainTex: {instanceID: 0}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
