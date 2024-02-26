@@ -1,12 +1,12 @@
 /*------------------------------------------------------------------------------
   File:           PlayerAuthoring.cs 
   Project:        AlchemicalFlux Unity-Dots
-  Description:    Handles the creation and processing of the DOTS RotateSpeed
+  Description:    Handles the creation and processing of the DOTS Player
                     component on entities.
   Copyright:      
 
   Last commit by: alchemicalflux 
-  Last commit at: 2024-02-25 20:30:24 
+  Last commit at: 2024-02-25 21:00:55 
 ------------------------------------------------------------------------------*/
 using Unity.Entities;
 using UnityEngine;

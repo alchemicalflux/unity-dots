@@ -6,7 +6,7 @@
   Copyright:      
 
   Last commit by: alchemicalflux 
-  Last commit at: 2024-02-25 15:36:11 
+  Last commit at: 2024-02-25 21:00:55 
 ------------------------------------------------------------------------------*/
 using Unity.Burst;
 using Unity.Entities;
@@ -26,12 +26,17 @@ namespace AlchemicalFlux.DOTS
         [BurstCompile]
         void OnUpdate(ref SystemState state)
         {
+            // Querys all instances of RotateSpeed with a LocalTransform, exluding Players.
+            //var query = SystemAPI.Query<RefRW<LocalTransform>, RefRO<RotateSpeed>>()
+            //    .WithNone<Player>();
+
             var job = new RotatingCubeJob { DeltaTime = SystemAPI.Time.DeltaTime };
             job.ScheduleParallel();
         }
     }
 
     [BurstCompile]
+    [WithNone(typeof(Player))]
     public partial struct RotatingCubeJob : IJobEntity
     {
         public float DeltaTime;
