@@ -6,8 +6,9 @@
   Copyright:      
 
   Last commit by: alchemicalflux 
-  Last commit at: 2024-02-25 23:04:40 
+  Last commit at: 2024-02-26 00:01:21 
 ------------------------------------------------------------------------------*/
+using System;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
@@ -18,6 +19,8 @@ namespace AlchemicalFlux.DOTS
     [BurstCompile]
     public partial class PlayerShootingSystem : SystemBase
     {
+        public event EventHandler OnShoot;
+
         protected override void OnCreate()
         {
             RequireForUpdate<Player>();
@@ -42,15 +45,18 @@ namespace AlchemicalFlux.DOTS
             var spawnCubesConfig = SystemAPI.GetSingleton<SpawnCubesConfig>();
 
             var commandBuffer = new EntityCommandBuffer(WorldUpdateAllocator);
-            foreach(var player in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>().WithDisabled<Stunned>())
+            foreach(var (transform, entity) in 
+                SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>().WithDisabled<Stunned>().WithEntityAccess())
             {
-                var entity = commandBuffer.Instantiate(spawnCubesConfig.CubePrefabEntity);
-                commandBuffer.SetComponent(entity, new LocalTransform
+                var spawnedEntity = commandBuffer.Instantiate(spawnCubesConfig.CubePrefabEntity);
+                commandBuffer.SetComponent(spawnedEntity, new LocalTransform
                 {
-                    Position = player.ValueRO.Position,
+                    Position = transform.ValueRO.Position,
                     Scale = 1f,
                     Rotation = Unity.Mathematics.quaternion.identity
                 });
+
+                OnShoot?.Invoke(entity, EventArgs.Empty);
             }
             commandBuffer.Playback(EntityManager);
         }
