@@ -6,7 +6,7 @@
   Copyright:      
 
   Last commit by: alchemicalflux 
-  Last commit at: 2024-02-25 21:07:29 
+  Last commit at: 2024-02-25 21:29:54 
 ------------------------------------------------------------------------------*/
 using Unity.Burst;
 using Unity.Entities;
@@ -26,6 +26,10 @@ namespace AlchemicalFlux.DOTS
         [BurstCompile]
         void OnUpdate(ref SystemState state)
         {
+            // !!! DISABLES SYSTEM !!!
+            state.Enabled = false;
+            return;
+
             // Querys all instances of RotateSpeed with a LocalTransform, exluding Players.
             //var query = SystemAPI.Query<RefRW<LocalTransform>, RefRO<RotateSpeed>>()
             //    .WithAny<RotatingCube>();
