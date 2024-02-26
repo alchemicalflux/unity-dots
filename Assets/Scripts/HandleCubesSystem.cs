@@ -6,7 +6,7 @@
   Copyright:      
 
   Last commit by: alchemicalflux 
-  Last commit at: 2024-02-25 21:29:54 
+  Last commit at: 2024-02-25 21:42:32 
 ------------------------------------------------------------------------------*/
 using Unity.Burst;
 using Unity.Entities;
@@ -19,12 +19,9 @@ namespace AlchemicalFlux.DOTS
         [BurstCompile]
         void OnUpdate(ref SystemState state)
         {
-            foreach (var (localTransform, rotateSpeed, movement) in 
-                SystemAPI.Query<RefRW<LocalTransform>, RefRO<RotateSpeed>, RefRO<Movement>>()
-                .WithAll<RotatingCube>())
+            foreach (var aspect in SystemAPI.Query<RotatingMovingCubeAspect>().WithAll<RotatingCube>())
             {
-                localTransform.ValueRW = localTransform.ValueRO.RotateY(rotateSpeed.ValueRO.Value * SystemAPI.Time.DeltaTime);
-                localTransform.ValueRW = localTransform.ValueRO.Translate(movement.ValueRO.Vector * SystemAPI.Time.DeltaTime);
+                aspect.MoveRotate(SystemAPI.Time.DeltaTime);
             }
         }
     }
